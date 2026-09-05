@@ -1,37 +1,68 @@
-# Cal - CI/CD Practice Mini Project
+# Flask Calculator - CI/CD Practice Mini Project
 
-A lightweight Node.js Calculator library built for practicing **GitHub Actions Continuous Integration (CI)** workflows on branches other than `main` (specifically `dev`).
+A lightweight Python Flask Calculator API built to practice **GitHub Actions Continuous Integration (CI)** workflows on the `dev` branch with automated `pytest` execution.
 
 ---
 
 ## 🚀 Features
 
-- **Math Operations**: `add`, `subtract`, `multiply`, `divide`, `power`, `isEven`, `percentage`
-- **Error Handling**: Throws meaningful errors for invalid cases like division by zero
-- **Automated Tests**: Comprehensive test suite using Jest
-- **GitHub Actions CI Workflow**: Configured in `.github/workflows/ci.yml` to trigger automatically whenever code is pushed to or pulled into the `dev` branch
+- **Flask REST API**:
+  - `GET /`: API health & overview
+  - `POST /calculate`: Handles operations (`add`, `subtract`, `multiply`, `divide`, `power`, `percentage`)
+- **Robust Error Handling**: Returns descriptive error messages and HTTP status codes (e.g. `400` on division by zero or invalid input)
+- **Pytest Suite**: 13 automated test cases covering endpoints, edge cases, and exceptions
+- **GitHub Actions CI Workflow**: Configured in `.github/workflows/ci.yml` to trigger on:
+  - `push` to `dev`
+  - `pull_request` to `main`
 
 ---
 
-## 🧪 Local Testing
+## 🐍 Setup Local Virtual Environment (`venv`)
 
-To run the automated tests locally:
+### 1. Create and Activate Virtual Environment
+```powershell
+# Create virtual environment
+python -m venv venv
 
+# Activate on Windows PowerShell
+.\venv\Scripts\Activate.ps1
+```
+
+### 2. Install Dependencies
 ```bash
-npm test
+pip install -r requirements.txt
 ```
 
 ---
 
-## 🛠️ Pushing to GitHub to Trigger CI
+## 🧪 Run Automated Tests
 
-1. Create a new empty repository on [GitHub](https://github.com/new) (e.g., `cal-ci-practice`).
-2. Link your local project to your GitHub repository:
-   ```bash
-   git remote add origin https://github.com/<your-username>/<your-repo-name>.git
-   ```
-3. Push the `dev` branch:
-   ```bash
-   git push -u origin dev
-   ```
-4. Navigate to the **Actions** tab on your GitHub repository to watch the CI pipeline run automated tests!
+With the virtual environment activated:
+```bash
+pytest -v
+```
+
+---
+
+## 🌐 Run the Flask App Locally
+
+```bash
+python app.py
+```
+API will run at `http://127.0.0.1:5000`.
+
+### Example Request:
+```bash
+curl -X POST http://127.0.0.1:5000/calculate \
+  -H "Content-Type: application/json" \
+  -d '{"operation": "add", "a": 10, "b": 5}'
+```
+
+---
+
+## 🛠️ GitHub Actions CI Workflow
+
+The workflow at `.github/workflows/ci.yml`:
+1. Sets up Python 3.12
+2. Caches and installs dependencies from `requirements.txt`
+3. Runs `pytest -v` automatically on every push to `dev` or pull request to `main`
