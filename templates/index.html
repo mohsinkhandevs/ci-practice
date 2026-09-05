@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Calculator | Flask + Pytest CI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Background Glow Accents -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <main class="calculator-app">
+    <!-- Top Header -->
+    <header class="calc-header">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <h1>Nexus Calc</h1>
+          <span class="version-tag">Flask v3.1 &bull; CI Verified</span>
+        </div>
+      </div>
+      <div class="api-status" id="apiStatus" title="Backend API Connected">
+        <span class="status-dot"></span>
+        <span class="status-text">API Online</span>
+      </div>
+    </header>
+
+    <div class="calculator-container">
+      <!-- Calculator Main Body -->
+      <section class="calc-card">
+        <!-- Display Screen -->
+        <div class="screen-container">
+          <div class="history-display" id="historyDisplay">&nbsp;</div>
+          <div class="main-display" id="mainDisplay">0</div>
+          <div class="calc-notification" id="calcNotification"></div>
+        </div>
+
+        <!-- Keypad Grid -->
+        <div class="keypad-grid">
+          <!-- Row 1 -->
+          <button class="btn btn-action" data-action="clear" id="btnClear">AC</button>
+          <button class="btn btn-action" data-action="delete" id="btnDel">DEL</button>
+          <button class="btn btn-op" data-op="percentage" id="btnPerc">%</button>
+          <button class="btn btn-op" data-op="divide" id="btnDiv">&divide;</button>
+
+          <!-- Row 2 -->
+          <button class="btn btn-num" data-num="7">7</button>
+          <button class="btn btn-num" data-num="8">8</button>
+          <button class="btn btn-num" data-num="9">9</button>
+          <button class="btn btn-op" data-op="multiply" id="btnMul">&times;</button>
+
+          <!-- Row 3 -->
+          <button class="btn btn-num" data-num="4">4</button>
+          <button class="btn btn-num" data-num="5">5</button>
+          <button class="btn btn-num" data-num="6">6</button>
+          <button class="btn btn-op" data-op="subtract" id="btnSub">&minus;</button>
+
+          <!-- Row 4 -->
+          <button class="btn btn-num" data-num="1">1</button>
+          <button class="btn btn-num" data-num="2">2</button>
+          <button class="btn btn-num" data-num="3">3</button>
+          <button class="btn btn-op" data-op="add" id="btnAdd">&#43;</button>
+
+          <!-- Row 5 -->
+          <button class="btn btn-op" data-op="power" id="btnPow">x&#696;</button>
+          <button class="btn btn-num" data-num="0">0</button>
+          <button class="btn btn-num" data-num=".">.</button>
+          <button class="btn btn-equals" data-action="equals" id="btnEquals">&#61;</button>
+        </div>
+      </section>
+
+      <!-- Calculation History Sidebar -->
+      <aside class="history-sidebar">
+        <div class="sidebar-header">
+          <h3>Recent Computations</h3>
+          <button class="clear-history-btn" id="clearHistoryBtn" title="Clear History">Clear</button>
+        </div>
+        <div class="history-list" id="historyList">
+          <div class="empty-history">No computations yet.<br><small>Operations processed by Flask API will appear here.</small></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Footer info -->
+    <footer class="calc-footer">
+      <span>Continuous Integration powered by <strong>GitHub Actions</strong></span>
+      <span class="shortcut-tip">Keyboard shortcuts enabled &bull; Enter = Calculate &bull; Esc = Clear</span>
+    </footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+</body>
+</html>

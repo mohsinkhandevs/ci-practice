@@ -17,6 +17,18 @@ def test_home_endpoint(client):
     assert "Welcome to Flask Calculator API" in json_data["message"]
     assert "add" in json_data["supported_operations"]
 
+def test_frontend_ui_rendered(client):
+    # Test HTML UI via Accept header
+    response = client.get("/", headers={"Accept": "text/html"})
+    assert response.status_code == 200
+    assert b"Nexus Calc" in response.data
+    assert b"keypad-grid" in response.data
+
+    # Test dedicated /ui route
+    ui_response = client.get("/ui")
+    assert ui_response.status_code == 200
+    assert b"Nexus Calc" in ui_response.data
+
 def test_addition(client):
     response = client.post("/calculate", json={"operation": "add", "a": 10, "b": 5})
     assert response.status_code == 200

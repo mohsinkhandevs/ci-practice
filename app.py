@@ -1,7 +1,7 @@
 """
 Flask Calculator Application
 """
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -27,10 +27,17 @@ def perform_calculation(operation, a, b):
 
 @app.route("/", methods=["GET"])
 def home():
+    # Serve rich UI when requested by browser
+    if "text/html" in request.headers.get("Accept", ""):
+        return render_template("index.html")
     return jsonify({
         "message": "Welcome to Flask Calculator API",
         "supported_operations": ["add", "subtract", "multiply", "divide", "power", "percentage"]
     }), 200
+
+@app.route("/ui", methods=["GET"])
+def ui():
+    return render_template("index.html")
 
 @app.route("/calculate", methods=["POST"])
 def calculate():
